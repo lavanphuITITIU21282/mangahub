@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"mangahub/internal/auth"
-	"mangahub/internal/domain"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -18,7 +17,6 @@ type AuthHandler struct {
 
 type registerRequest struct {
 	Username string `json:"username"`
-	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
@@ -29,9 +27,7 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		return
 	}
 
-	if !domain.IsValidUsername(req.Username) ||
-		!domain.IsValidEmail(req.Email) ||
-		!domain.IsValidPassword(req.Password) {
+	if len(req.Username) < 3 || len(req.Password) < 6 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid input"})
 		return
 	}
@@ -40,11 +36,11 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	id := uuid.NewString()
 
 	_, err := h.DB.Exec(
-		"INSERT INTO users(id, username, email, password_hash) VALUES(?, ?, ?, ?)",
-		id, req.Username, req.Email, hashed,
+		"INSERT INTO users(id, username, password_hash) VALUES(?, ?, ?)",
+		id, req.Username, hashed,
 	)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "username or email already exists"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "username already exists"})
 		return
 	}
 
@@ -69,7 +65,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 		req.Username,
 	).Scan(&id, &username, &passwordHash)
 
-	if err != nil || !auth.CheckPassword(passwordHash, req.Password) {
+	if err != nil || !auth.CheckPassword(req.Password, passwordHash) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})
 		return
 	}
