@@ -6,6 +6,8 @@ import (
 	"errors"
 	"time"
 
+	"mangahub/internal/udp"
+
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -24,7 +26,6 @@ func (s *Server) handleProgressUpdate(c *Client, raw []byte) error {
 	}
 	c.userID, c.username = uid, uname
 
-	// Optional: check manga exists
 	if !s.mangaExists(msg.MangaID) {
 		return errors.New("manga_not_found")
 	}
@@ -32,7 +33,6 @@ func (s *Server) handleProgressUpdate(c *Client, raw []byte) error {
 	status := "reading"
 	now := time.Now().Format(time.RFC3339)
 
-	// Upsert user_progress
 	_, err = s.db.Exec(`
 	INSERT INTO user_progress(user_id, manga_id, current_chapter, status, updated_at)
 	VALUES(?, ?, ?, ?, CURRENT_TIMESTAMP)
@@ -43,7 +43,6 @@ func (s *Server) handleProgressUpdate(c *Client, raw []byte) error {
 		return errors.New("db_error")
 	}
 
-	// ACK về client gửi
 	s.replyOK(c, map[string]any{
 		"user_id":    uid,
 		"username":   uname,
@@ -52,7 +51,6 @@ func (s *Server) handleProgressUpdate(c *Client, raw []byte) error {
 		"updated_at": now,
 	})
 
-	// Broadcast cho mọi client
 	s.broadcast(ProgressBroadcast{
 		Type:      "progress_broadcast",
 		UserID:    uid,
@@ -63,6 +61,16 @@ func (s *Server) handleProgressUpdate(c *Client, raw []byte) error {
 		UpdatedAt: now,
 	})
 
+	// ⭐ PHẦN 5: UDP Notification
+	if s.udpClient != nil {
+		s.udpClient.Send(udp.Notification{
+			Type:     "progress_update",
+			Username: uname,
+			MangaID:  msg.MangaID,
+			Chapter:  msg.Chapter,
+		})
+	}
+
 	return nil
 }
 
@@ -72,28 +80,21 @@ func (s *Server) mangaExists(id string) bool {
 	return err == nil
 }
 
-func (s *Server) verifyToken(tokenStr string) (userID, username string, err error) {
+func (s *Server) verifyToken(tokenStr string) (string, string, error) {
 	t, err := jwt.Parse(tokenStr, func(t *jwt.Token) (any, error) {
 		return []byte(s.jwtSecret), nil
 	})
 	if err != nil || !t.Valid {
 		return "", "", errors.New("invalid")
 	}
-	claims, ok := t.Claims.(jwt.MapClaims)
-	if !ok {
-		return "", "", errors.New("invalid")
-	}
 
-	uidAny := claims["user_id"]
-	unAny := claims["username"]
-	uid, ok1 := uidAny.(string)
-	un, ok2 := unAny.(string)
-	if !ok1 || !ok2 || uid == "" || un == "" {
+	claims := t.Claims.(jwt.MapClaims)
+	uid, ok1 := claims["user_id"].(string)
+	un, ok2 := claims["username"].(string)
+	if !ok1 || !ok2 {
 		return "", "", errors.New("invalid")
 	}
 	return uid, un, nil
 }
 
-// (Giữ import auth để tránh unused trong project nếu bạn có file auth khác)
-// Nếu bạn không cần dòng này, có thể xóa, không ảnh hưởng.
 var _ = sql.ErrNoRows

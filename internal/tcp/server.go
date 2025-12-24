@@ -8,12 +8,16 @@ import (
 	"net"
 	"sync"
 	"time"
+
+	"mangahub/internal/udp"
 )
 
 type Server struct {
 	addr      string
 	db        *sql.DB
 	jwtSecret string
+
+	udpClient *udp.Client // ⭐ THÊM CHO PHẦN 5 (UDP)
 
 	mu      sync.Mutex
 	clients map[*Client]struct{}
@@ -26,11 +30,12 @@ type Client struct {
 	username string
 }
 
-func NewServer(addr string, db *sql.DB, jwtSecret string) *Server {
+func NewServer(addr string, db *sql.DB, jwtSecret string, udpClient *udp.Client) *Server {
 	return &Server{
 		addr:      addr,
 		db:        db,
 		jwtSecret: jwtSecret,
+		udpClient: udpClient, // ⭐ THÊM
 		clients:   make(map[*Client]struct{}),
 	}
 }
@@ -85,7 +90,7 @@ func (s *Server) broadcast(msg any) {
 		select {
 		case c.send <- b:
 		default:
-			// client bị nghẽn -> drop để tránh treo server
+			// drop nếu client nghẽn
 		}
 	}
 }
@@ -104,7 +109,6 @@ func (s *Server) readLoop(c *Client) {
 	defer s.removeClient(c)
 
 	sc := bufio.NewScanner(c.conn)
-	// tăng buffer nếu payload dài
 	sc.Buffer(make([]byte, 0, 4096), 1024*1024)
 
 	for sc.Scan() {
@@ -122,10 +126,12 @@ func (s *Server) readLoop(c *Client) {
 		switch base.Type {
 		case "hello":
 			s.handleHello(c)
+
 		case "progress_update":
 			if err := s.handleProgressUpdate(c, line); err != nil {
 				s.replyError(c, err.Error())
 			}
+
 		default:
 			s.replyError(c, "unknown_type")
 		}

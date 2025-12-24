@@ -6,6 +6,7 @@ import (
 	"mangahub/internal/config"
 	"mangahub/internal/db"
 	tcpsync "mangahub/internal/tcp"
+	"mangahub/internal/udp" // ⭐ THÊM
 )
 
 func main() {
@@ -19,8 +20,19 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// ⭐ TẠO UDP CLIENT (PHẦN 5)
+	udpClient, err := udp.NewClient("127.0.0.1:7070")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	addr := ":9090"
-	s := tcpsync.NewServer(addr, database, cfg.JWTSecret)
+	s := tcpsync.NewServer(
+		addr,
+		database,
+		cfg.JWTSecret,
+		udpClient, // ⭐ TRUYỀN THAM SỐ THỨ 4
+	)
 
 	log.Println("TCP Progress Sync server running on", addr)
 	if err := s.ListenAndServe(); err != nil {
