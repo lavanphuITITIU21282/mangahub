@@ -49,6 +49,40 @@ func main() {
 		}
 		client.ListLibrary()
 
+	case "grpc":
+		// gRPC commands use MANGAHUB_GRPC_ADDR env var (default: localhost:50051)
+		if len(os.Args) < 3 {
+			fmt.Println("Usage: mangahub grpc <search|get|progress> ...")
+			fmt.Println("  mangahub grpc search <query>")
+			fmt.Println("  mangahub grpc get <manga_id>")
+			fmt.Println("  mangahub grpc progress <manga_id> <chapter>")
+			return
+		}
+		grpcAddr := os.Getenv("MANGAHUB_GRPC_ADDR")
+		g := cli.NewGRPCClient(grpcAddr)
+		switch os.Args[2] {
+		case "search":
+			if len(os.Args) != 4 {
+				fmt.Println("Usage: mangahub grpc search <query>")
+				return
+			}
+			g.SearchManga(os.Args[3])
+		case "get":
+			if len(os.Args) != 4 {
+				fmt.Println("Usage: mangahub grpc get <manga_id>")
+				return
+			}
+			g.GetManga(os.Args[3])
+		case "progress":
+			if len(os.Args) != 5 {
+				fmt.Println("Usage: mangahub grpc progress <manga_id> <chapter>")
+				return
+			}
+			g.UpdateProgress(os.Args[3], os.Args[4])
+		default:
+			fmt.Println("Unknown grpc command")
+		}
+
 	default:
 		fmt.Println("Unknown command")
 	}

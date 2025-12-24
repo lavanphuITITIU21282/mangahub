@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package mangahub.v1;
+
+option go_package = "mangahub/proto/mangahubv1;mangahubv1";
+
+// MangaHubService exposes gRPC endpoints for manga browsing and reading progress.
+service MangaHubService {
+  rpc SearchManga(SearchMangaRequest) returns (SearchMangaResponse);
+  rpc GetManga(GetMangaRequest) returns (GetMangaResponse);
+  // UpdateProgress requires an Authorization metadata header: "Bearer <JWT>".
+  rpc UpdateProgress(UpdateProgressRequest) returns (UpdateProgressResponse);
+}
+
+message Manga {
+  string id = 1;
+  string title = 2;
+  string author = 3;
+  string genres = 4;
+  string status = 5;
+  int32 total_chapters = 6;
+  string description = 7;
+}
+
+message SearchMangaRequest {
+  // If empty, returns all manga.
+  string query = 1;
+}
+
+message SearchMangaResponse {
+  repeated Manga mangas = 1;
+}
+
+message GetMangaRequest {
+  string id = 1;
+}
+
+message GetMangaResponse {
+  Manga manga = 1;
+}
+
+message UpdateProgressRequest {
+  string manga_id = 1;
+  int32 chapter = 2;
+}
+
+message UpdateProgressResponse {
+  string message = 1;
+}

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Generate Go code from proto definitions.
+# Requirements:
+#   - protoc in PATH
+
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+protoc \
+  --go_out=. --go_opt=paths=source_relative \
+  --go-grpc_out=. --go-grpc_opt=paths=source_relative \
+  proto/mangahubv1/mangahub.proto
+
+echo "✅ Generated: proto/mangahubv1/*.pb.go"
