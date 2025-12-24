@@ -27,7 +27,7 @@ func (c *Client) SetProgress(mangaID, chapter string) {
 	fmt.Println("Progress updated")
 }
 
-func (c *Client) ListLibrary() {
+func (c *Client) ListLibraryLegacy() {
 	req, _ := http.NewRequest("GET", c.BaseURL+"/users/library", nil)
 	req.Header.Set("Authorization", "Bearer "+c.Token)
 

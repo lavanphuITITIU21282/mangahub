@@ -9,11 +9,17 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Usage: mangahub <command>")
+		printUsage()
 		return
 	}
 
-	client := cli.NewClient("http://localhost:8080")
+	// Allow overriding API base URL from env
+	baseURL := os.Getenv("MANGAHUB_BASE_URL")
+	if baseURL == "" {
+		baseURL = "http://localhost:8080"
+	}
+
+	client := cli.NewClient(baseURL)
 
 	switch os.Args[1] {
 
@@ -29,10 +35,17 @@ func main() {
 			fmt.Println("Usage: mangahub manga <list|view>")
 			return
 		}
-		if os.Args[2] == "list" {
+		switch os.Args[2] {
+		case "list":
 			client.ListManga()
-		} else if os.Args[2] == "view" && len(os.Args) == 4 {
+		case "view":
+			if len(os.Args) != 4 {
+				fmt.Println("Usage: mangahub manga view <manga_id>")
+				return
+			}
 			client.ViewManga(os.Args[3])
+		default:
+			fmt.Println("Usage: mangahub manga <list|view>")
 		}
 
 	case "progress":
@@ -58,8 +71,14 @@ func main() {
 			fmt.Println("  mangahub grpc progress <manga_id> <chapter>")
 			return
 		}
+
 		grpcAddr := os.Getenv("MANGAHUB_GRPC_ADDR")
+		if grpcAddr == "" {
+			grpcAddr = "localhost:50051"
+		}
+
 		g := cli.NewGRPCClient(grpcAddr)
+
 		switch os.Args[2] {
 		case "search":
 			if len(os.Args) != 4 {
@@ -67,23 +86,45 @@ func main() {
 				return
 			}
 			g.SearchManga(os.Args[3])
+
 		case "get":
 			if len(os.Args) != 4 {
 				fmt.Println("Usage: mangahub grpc get <manga_id>")
 				return
 			}
 			g.GetManga(os.Args[3])
+
 		case "progress":
 			if len(os.Args) != 5 {
 				fmt.Println("Usage: mangahub grpc progress <manga_id> <chapter>")
 				return
 			}
 			g.UpdateProgress(os.Args[3], os.Args[4])
+
 		default:
 			fmt.Println("Unknown grpc command")
 		}
 
 	default:
 		fmt.Println("Unknown command")
+		printUsage()
 	}
+}
+
+func printUsage() {
+	fmt.Println("Usage: mangahub <command>")
+	fmt.Println("")
+	fmt.Println("Commands:")
+	fmt.Println("  login <username> <password>")
+	fmt.Println("  manga list")
+	fmt.Println("  manga view <manga_id>")
+	fmt.Println("  progress set <manga_id> <chapter>")
+	fmt.Println("  library list")
+	fmt.Println("  grpc search <query>")
+	fmt.Println("  grpc get <manga_id>")
+	fmt.Println("  grpc progress <manga_id> <chapter>")
+	fmt.Println("")
+	fmt.Println("Env:")
+	fmt.Println("  MANGAHUB_BASE_URL   (default: http://localhost:8080)")
+	fmt.Println("  MANGAHUB_GRPC_ADDR  (default: localhost:50051)")
 }
