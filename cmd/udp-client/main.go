@@ -2,20 +2,28 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"mangahub/internal/udp"
 )
 
 func main() {
 	server := flag.String("server", "127.0.0.1:9092", "udp server address")
-	mode := flag.String("mode", "subscribe", "subscribe|broadcast|list|ping|unsub")
-	msg := flag.String("msg", "", "message for broadcast")
+	mode := flag.String("mode", "subscribe", "subscribe|broadcast|release|list|ping|unsub")
+	msg := flag.String("msg", "", "message for broadcast (raw string)")
+
+	// release notification payload flags
+	mangaID := flag.String("manga", "", "manga id for chapter release notification")
+	title := flag.String("title", "", "manga title for chapter release notification (optional)")
+	chapter := flag.Int("chapter", 0, "chapter number for chapter release notification")
+	text := flag.String("text", "", "custom message text for chapter release (optional)")
 	flag.Parse()
 
 	c, err := udp.NewClient(*server)
@@ -36,6 +44,39 @@ func main() {
 		if err := c.Listen(ctx, func(t string) { fmt.Println(t) }); err != nil {
 			log.Fatal(err)
 		}
+
+	case "release":
+		if *mangaID == "" {
+			log.Fatal("missing -manga")
+		}
+		if *chapter <= 0 {
+			log.Fatal("missing/invalid -chapter")
+		}
+		mTitle := *title
+		if mTitle == "" {
+			mTitle = *mangaID
+		}
+		message := *text
+		if message == "" {
+			message = fmt.Sprintf("New chapter released: %s #%d", mTitle, *chapter)
+		}
+
+		payload, err := json.Marshal(map[string]any{
+			"type":        "chapter_release",
+			"manga_id":    *mangaID,
+			"manga_title": mTitle,
+			"chapter":     *chapter,
+			"message":     message,
+			"released_at": time.Now().Format(time.RFC3339),
+		})
+		if err != nil {
+			log.Fatal(err)
+		}
+		if err := c.Broadcast(string(payload)); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("✅ chapter release broadcast sent. Waiting reply...")
+		_ = c.Listen(ctx, func(t string) { fmt.Println(t) })
 
 	case "broadcast":
 		if *msg == "" {

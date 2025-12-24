@@ -1,0 +1,434 @@
+[
+  {
+    "id": "one-piece",
+    "title": "One Piece",
+    "author": "Eiichiro Oda",
+    "genres": "Action,Adventure,Comedy",
+    "status": "Ongoing",
+    "total_chapters": 1100,
+    "description": "A pirate crew searches for the legendary treasure One Piece."
+  },
+  {
+    "id": "naruto",
+    "title": "Naruto",
+    "author": "Masashi Kishimoto",
+    "genres": "Action,Adventure,Ninja",
+    "status": "Completed",
+    "total_chapters": 700,
+    "description": "A young ninja works to earn recognition and become the Hokage."
+  },
+  {
+    "id": "bleach",
+    "title": "Bleach",
+    "author": "Tite Kubo",
+    "genres": "Action,Supernatural",
+    "status": "Completed",
+    "total_chapters": 686,
+    "description": "A teen gains Soul Reaper powers and battles spirits and enemies."
+  },
+  {
+    "id": "dragon-ball",
+    "title": "Dragon Ball",
+    "author": "Akira Toriyama",
+    "genres": "Action,Adventure,Martial Arts",
+    "status": "Completed",
+    "total_chapters": 519,
+    "description": "Goku journeys through epic battles while searching for Dragon Balls."
+  },
+  {
+    "id": "attack-on-titan",
+    "title": "Attack on Titan",
+    "author": "Hajime Isayama",
+    "genres": "Action,Dark Fantasy",
+    "status": "Completed",
+    "total_chapters": 139,
+    "description": "Humanity fights for survival behind walls against giant Titans."
+  },
+  {
+    "id": "fullmetal-alchemist",
+    "title": "Fullmetal Alchemist",
+    "author": "Hiromu Arakawa",
+    "genres": "Action,Adventure,Fantasy",
+    "status": "Completed",
+    "total_chapters": 108,
+    "description": "Two brothers use alchemy to recover what they lost and uncover a conspiracy."
+  },
+  {
+    "id": "death-note",
+    "title": "Death Note",
+    "author": "Tsugumi Ohba",
+    "genres": "Mystery,Psychological,Thriller",
+    "status": "Completed",
+    "total_chapters": 108,
+    "description": "A notebook grants the power to kill, sparking a battle of wits with a detective."
+  },
+  {
+    "id": "demon-slayer",
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "author": "Koyoharu Gotouge",
+    "genres": "Action,Dark Fantasy",
+    "status": "Completed",
+    "total_chapters": 205,
+    "description": "A boy joins demon slayers to cure his sister and defeat demons."
+  },
+  {
+    "id": "jujutsu-kaisen",
+    "title": "Jujutsu Kaisen",
+    "author": "Gege Akutami",
+    "genres": "Action,Supernatural",
+    "status": "Ongoing",
+    "total_chapters": 270,
+    "description": "A student enters a world of curses and sorcerers after a fateful encounter."
+  },
+  {
+    "id": "my-hero-academia",
+    "title": "My Hero Academia",
+    "author": "Kohei Horikoshi",
+    "genres": "Action,Superhero",
+    "status": "Completed",
+    "total_chapters": 430,
+    "description": "A powerless boy inherits a hero power and trains to become the greatest hero."
+  },
+  {
+    "id": "hunter-x-hunter",
+    "title": "Hunter x Hunter",
+    "author": "Yoshihiro Togashi",
+    "genres": "Action,Adventure",
+    "status": "Ongoing",
+    "total_chapters": 410,
+    "description": "A boy becomes a Hunter to find his father and faces dangerous trials."
+  },
+  {
+    "id": "berserk",
+    "title": "Berserk",
+    "author": "Kentaro Miura",
+    "genres": "Action,Dark Fantasy",
+    "status": "Ongoing",
+    "total_chapters": 380,
+    "description": "A lone swordsman struggles through a brutal world of war and monsters."
+  },
+  {
+    "id": "vinland-saga",
+    "title": "Vinland Saga",
+    "author": "Makoto Yukimura",
+    "genres": "Action,Historical",
+    "status": "Ongoing",
+    "total_chapters": 215,
+    "description": "A Viking warrior seeks purpose and peace after a life of revenge."
+  },
+  {
+    "id": "chainsaw-man",
+    "title": "Chainsaw Man",
+    "author": "Tatsuki Fujimoto",
+    "genres": "Action,Dark Fantasy",
+    "status": "Ongoing",
+    "total_chapters": 180,
+    "description": "A debt-ridden teen merges with a devil and fights in a chaotic world."
+  },
+  {
+    "id": "spy-x-family",
+    "title": "SPY x FAMILY",
+    "author": "Tatsuya Endo",
+    "genres": "Action,Comedy,Slice of Life",
+    "status": "Ongoing",
+    "total_chapters": 120,
+    "description": "A spy builds a fake family for a mission, unaware of their secrets."
+  },
+  {
+    "id": "one-punch-man",
+    "title": "One-Punch Man",
+    "author": "ONE",
+    "genres": "Action,Comedy,Superhero",
+    "status": "Ongoing",
+    "total_chapters": 200,
+    "description": "A hero defeats enemies with one punch and searches for a real challenge."
+  },
+  {
+    "id": "tokyo-ghoul",
+    "title": "Tokyo Ghoul",
+    "author": "Sui Ishida",
+    "genres": "Action,Horror,Supernatural",
+    "status": "Completed",
+    "total_chapters": 143,
+    "description": "A student becomes half-ghoul and navigates a hidden world of predators."
+  },
+  {
+    "id": "fairy-tail",
+    "title": "Fairy Tail",
+    "author": "Hiro Mashima",
+    "genres": "Action,Adventure,Fantasy",
+    "status": "Completed",
+    "total_chapters": 545,
+    "description": "Wizards in a guild take on quests and face dark forces together."
+  },
+  {
+    "id": "black-clover",
+    "title": "Black Clover",
+    "author": "Yuki Tabata",
+    "genres": "Action,Fantasy",
+    "status": "Ongoing",
+    "total_chapters": 380,
+    "description": "A magicless boy aims to become Wizard King through grit and teamwork."
+  },
+  {
+    "id": "haikyuu",
+    "title": "Haikyu!!",
+    "author": "Haruichi Furudate",
+    "genres": "Sports,Comedy",
+    "status": "Completed",
+    "total_chapters": 402,
+    "description": "A short volleyball player chases greatness with his high school team."
+  },
+  {
+    "id": "dr-stone",
+    "title": "Dr. Stone",
+    "author": "Riichiro Inagaki",
+    "genres": "Adventure,Sci-Fi",
+    "status": "Completed",
+    "total_chapters": 232,
+    "description": "After humanity turns to stone, a genius rebuilds civilization with science."
+  },
+  {
+    "id": "jojo-bizarre-adventure",
+    "title": "JoJo's Bizarre Adventure",
+    "author": "Hirohiko Araki",
+    "genres": "Action,Adventure,Supernatural",
+    "status": "Ongoing",
+    "total_chapters": 1000,
+    "description": "Generations of the Joestar family battle supernatural foes across eras."
+  },
+  {
+    "id": "kaguya-sama",
+    "title": "Kaguya-sama: Love Is War",
+    "author": "Aka Akasaka",
+    "genres": "Comedy,Romance",
+    "status": "Completed",
+    "total_chapters": 281,
+    "description": "Two elite students play mind games to make the other confess first."
+  },
+  {
+    "id": "fruits-basket",
+    "title": "Fruits Basket",
+    "author": "Natsuki Takaya",
+    "genres": "Drama,Romance,Slice of Life",
+    "status": "Completed",
+    "total_chapters": 136,
+    "description": "A girl befriends a cursed family and helps them heal and change."
+  },
+  {
+    "id": "slam-dunk",
+    "title": "Slam Dunk",
+    "author": "Takehiko Inoue",
+    "genres": "Sports,Comedy",
+    "status": "Completed",
+    "total_chapters": 276,
+    "description": "A delinquent joins a basketball team and discovers discipline and passion."
+  },
+  {
+    "id": "vagabond",
+    "title": "Vagabond",
+    "author": "Takehiko Inoue",
+    "genres": "Action,Historical",
+    "status": "Ongoing",
+    "total_chapters": 327,
+    "description": "A retelling of Miyamoto Musashi and the path of the sword."
+  },
+  {
+    "id": "monster",
+    "title": "Monster",
+    "author": "Naoki Urasawa",
+    "genres": "Mystery,Thriller",
+    "status": "Completed",
+    "total_chapters": 162,
+    "description": "A doctor hunts a serial killer he once saved, unraveling a dark mystery."
+  },
+  {
+    "id": "twentieth-century-boys",
+    "title": "20th Century Boys",
+    "author": "Naoki Urasawa",
+    "genres": "Mystery,Sci-Fi,Thriller",
+    "status": "Completed",
+    "total_chapters": 249,
+    "description": "Childhood memories become real as friends face a global conspiracy."
+  },
+  {
+    "id": "gintama",
+    "title": "Gintama",
+    "author": "Hideaki Sorachi",
+    "genres": "Action,Comedy,Sci-Fi",
+    "status": "Completed",
+    "total_chapters": 704,
+    "description": "A samurai and friends take odd jobs in an alien-ruled Edo."
+  },
+  {
+    "id": "the-promised-neverland",
+    "title": "The Promised Neverland",
+    "author": "Kaiu Shirai",
+    "genres": "Mystery,Thriller",
+    "status": "Completed",
+    "total_chapters": 181,
+    "description": "Orphans discover a terrifying truth and plan a desperate escape."
+  },
+  {
+    "id": "tokyo-revengers",
+    "title": "Tokyo Revengers",
+    "author": "Ken Wakui",
+    "genres": "Action,Drama,Time Travel",
+    "status": "Completed",
+    "total_chapters": 278,
+    "description": "A man travels back in time to save friends and change a gang-driven future."
+  },
+  {
+    "id": "blue-lock",
+    "title": "Blue Lock",
+    "author": "Muneyuki Kaneshiro",
+    "genres": "Sports,Drama",
+    "status": "Ongoing",
+    "total_chapters": 300,
+    "description": "Strikers compete in an intense program to create Japans best soccer forward."
+  },
+  {
+    "id": "mob-psycho-100",
+    "title": "Mob Psycho 100",
+    "author": "ONE",
+    "genres": "Comedy,Supernatural,Action",
+    "status": "Completed",
+    "total_chapters": 101,
+    "description": "A mild teen with psychic powers learns to grow and control his emotions."
+  },
+  {
+    "id": "made-in-abyss",
+    "title": "Made in Abyss",
+    "author": "Akihito Tsukushi",
+    "genres": "Adventure,Fantasy",
+    "status": "Ongoing",
+    "total_chapters": 70,
+    "description": "A girl descends into a vast abyss filled with wonders and dangers."
+  },
+  {
+    "id": "claymore",
+    "title": "Claymore",
+    "author": "Norihiro Yagi",
+    "genres": "Action,Dark Fantasy",
+    "status": "Completed",
+    "total_chapters": 155,
+    "description": "Warrior women hunt monsters while fighting the darkness within."
+  },
+  {
+    "id": "akira",
+    "title": "Akira",
+    "author": "Katsuhiro Otomo",
+    "genres": "Action,Sci-Fi",
+    "status": "Completed",
+    "total_chapters": 120,
+    "description": "In Neo-Tokyo, psychic power threatens society and two friends collide."
+  },
+  {
+    "id": "uzumaki",
+    "title": "Uzumaki",
+    "author": "Junji Ito",
+    "genres": "Horror,Psychological",
+    "status": "Completed",
+    "total_chapters": 20,
+    "description": "A small town becomes obsessed with spirals, spiraling into madness."
+  },
+  {
+    "id": "tokyo-esp",
+    "title": "Tokyo ESP",
+    "author": "Hajime Segawa",
+    "genres": "Action,Supernatural",
+    "status": "Completed",
+    "total_chapters": 76,
+    "description": "A girl gains psychic powers and gets pulled into a citywide conflict."
+  },
+  {
+    "id": "assassination-classroom",
+    "title": "Assassination Classroom",
+    "author": "Yusei Matsui",
+    "genres": "Action,Comedy",
+    "status": "Completed",
+    "total_chapters": 180,
+    "description": "Students train to assassinate their strange teacher to save the world."
+  },
+  {
+    "id": "tokyo-mew-mew",
+    "title": "Tokyo Mew Mew",
+    "author": "Reiko Yoshida",
+    "genres": "Magical Girl,Romance",
+    "status": "Completed",
+    "total_chapters": 32,
+    "description": "Teen girls gain powers to protect Earth from alien threats."
+  },
+  {
+    "id": "your-lie-in-april",
+    "title": "Your Lie in April",
+    "author": "Naoshi Arakawa",
+    "genres": "Drama,Romance,Music",
+    "status": "Completed",
+    "total_chapters": 44,
+    "description": "A pianist rediscovers music through a free-spirited violinist."
+  },
+  {
+    "id": "erased",
+    "title": "ERASED",
+    "author": "Kei Sanbe",
+    "genres": "Mystery,Thriller,Time Travel",
+    "status": "Completed",
+    "total_chapters": 49,
+    "description": "A man relives the past to stop a crime and protect children."
+  },
+  {
+    "id": "re-life",
+    "title": "ReLIFE",
+    "author": "Yayoi Sou",
+    "genres": "Drama,Romance,Slice of Life",
+    "status": "Completed",
+    "total_chapters": 222,
+    "description": "A struggling adult gets a chance to redo high school for one year."
+  },
+  {
+    "id": "orange",
+    "title": "Orange",
+    "author": "Ichigo Takano",
+    "genres": "Drama,Romance",
+    "status": "Completed",
+    "total_chapters": 39,
+    "description": "A girl receives letters from her future self and tries to change regrets."
+  },
+  {
+    "id": "parasyte",
+    "title": "Parasyte",
+    "author": "Hitoshi Iwaaki",
+    "genres": "Action,Horror,Sci-Fi",
+    "status": "Completed",
+    "total_chapters": 64,
+    "description": "Alien parasites invade human bodies and a teen fights for survival."
+  },
+  {
+    "id": "kingdom",
+    "title": "Kingdom",
+    "author": "Yasuhisa Hara",
+    "genres": "Action,Historical,Military",
+    "status": "Ongoing",
+    "total_chapters": 800,
+    "description": "An orphaned boy rises as a general during Chinas Warring States period."
+  },
+  {
+    "id": "golden-kamuy",
+    "title": "Golden Kamuy",
+    "author": "Satoru Noda",
+    "genres": "Adventure,Historical",
+    "status": "Completed",
+    "total_chapters": 314,
+    "description": "A veteran and an Ainu girl hunt for hidden gold across the wild north."
+  },
+  {
+    "id": "promised-cinderella",
+    "title": "Promise Cinderella",
+    "author": "Oreco Tachibana",
+    "genres": "Drama,Romance",
+    "status": "Completed",
+    "total_chapters": 110,
+    "description": "A woman rebuilds her life after hardship and finds unexpected support."
+  }
+]
