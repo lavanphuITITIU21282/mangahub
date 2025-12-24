@@ -6,6 +6,7 @@ import (
 	"mangahub/internal/api"
 	"mangahub/internal/config"
 	"mangahub/internal/db"
+	"mangahub/internal/websocket"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,7 +33,12 @@ func main() {
 
 	r := gin.Default()
 
-	// AUTH
+	// ===== WEBSOCKET =====
+	hub := websocket.NewHub()
+	go hub.Run()
+	r.GET("/ws/chat", websocket.ServeWS(hub))
+
+	// ===== AUTH =====
 	authHandler := &api.AuthHandler{
 		DB:        database,
 		JWTSecret: cfg.JWTSecret,
@@ -40,12 +46,12 @@ func main() {
 	r.POST("/auth/register", authHandler.Register)
 	r.POST("/auth/login", authHandler.Login)
 
-	// MANGA
+	// ===== MANGA =====
 	mangaHandler := &api.MangaHandler{DB: database}
 	r.GET("/manga", mangaHandler.Search)
 	r.GET("/manga/:id", mangaHandler.Detail)
 
-	// USER APIs
+	// ===== USER APIs =====
 	authMW := api.AuthMiddleware(cfg.JWTSecret)
 	user := r.Group("/users")
 	user.Use(authMW)
