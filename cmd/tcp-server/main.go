@@ -20,7 +20,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// ⭐ TẠO UDP CLIENT (PHẦN 5)
+	
 	udpClient, err := udp.NewClient("127.0.0.1:7070")
 	if err != nil {
 		log.Fatal(err)
@@ -31,7 +31,7 @@ func main() {
 		addr,
 		database,
 		cfg.JWTSecret,
-		udpClient, // ⭐ TRUYỀN THAM SỐ THỨ 4
+		udpClient, 
 	)
 
 	log.Println("TCP Progress Sync server running on", addr)

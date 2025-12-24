@@ -2,17 +2,19 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"mangahub/internal/udp"
 )
 
 func main() {
-	server, err := udp.NewServer(":7070")
-	if err != nil {
+	addr := os.Getenv("MANGAHUB_UDP_ADDR")
+	if addr == "" {
+		addr = ":9092"
+	}
+
+	s := udp.NewServer(addr)
+	if err := s.Start(); err != nil {
 		log.Fatal(err)
 	}
-	defer server.Close()
-
-	log.Println("UDP Notification server running on :7070")
-	server.Run()
 }

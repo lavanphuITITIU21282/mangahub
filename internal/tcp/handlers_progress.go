@@ -6,8 +6,6 @@ import (
 	"errors"
 	"time"
 
-	"mangahub/internal/udp"
-
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -61,14 +59,15 @@ func (s *Server) handleProgressUpdate(c *Client, raw []byte) error {
 		UpdatedAt: now,
 	})
 
-	// ⭐ PHẦN 5: UDP Notification
+	// ⭐ UDP Notification (broadcast JSON to UDP server)
 	if s.udpClient != nil {
-		s.udpClient.Send(udp.Notification{
-			Type:     "progress_update",
-			Username: uname,
-			MangaID:  msg.MangaID,
-			Chapter:  msg.Chapter,
+		payload, _ := json.Marshal(map[string]any{
+			"type":     "progress_update",
+			"username": uname,
+			"manga_id": msg.MangaID,
+			"chapter":  msg.Chapter,
 		})
+		_ = s.udpClient.Broadcast(string(payload))
 	}
 
 	return nil
