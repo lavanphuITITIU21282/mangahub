@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
+
+	mhcli "mangahub/internal/cli"
 )
 
 func send(conn net.Conn, msg any) {
@@ -34,11 +37,15 @@ func main() {
 	resp, _ := reader.ReadString('\n')
 	fmt.Println("← Server:", resp)
 
-	// 2️⃣ LẤY TOKEN TỪ ENV (đỡ hardcode)
-	token := os.Getenv("JWT_TOKEN")
+	// 2️⃣ LẤY TOKEN: ưu tiên ENV, fallback file ~/.mangahub_token
+	token := strings.TrimSpace(os.Getenv("JWT_TOKEN"))
 	if token == "" {
-		fmt.Println("❌ Bạn chưa set JWT_TOKEN")
-		fmt.Println(`👉 Chạy:  export JWT_TOKEN="TOKEN_CUA_BAN"`)
+		token = strings.TrimSpace(mhcli.LoadToken())
+	}
+	if token == "" {
+		fmt.Println("❌ Không tìm thấy JWT token")
+		fmt.Println("👉 Cách 1: export JWT_TOKEN=\"TOKEN_CUA_BAN\"")
+		fmt.Println("👉 Cách 2: go run ./cmd/cli login <username> <password> (sẽ lưu ~/.mangahub_token)")
 		return
 	}
 

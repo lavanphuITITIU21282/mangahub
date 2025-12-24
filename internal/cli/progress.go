@@ -5,12 +5,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func (c *Client) SetProgress(mangaID, chapter string) {
-	body, _ := json.Marshal(map[string]string{
+	ch, err := strconv.Atoi(chapter)
+	if err != nil {
+		fmt.Println("Invalid chapter (must be a number):", chapter)
+		return
+	}
+	if ch < 0 {
+		fmt.Println("Invalid chapter (must be >= 0):", chapter)
+		return
+	}
+
+	body, _ := json.Marshal(map[string]any{
 		"manga_id": mangaID,
-		"chapter":  chapter,
+		"chapter":  ch,
 	})
 
 	req, _ := http.NewRequest("PUT", c.BaseURL+"/users/progress", bytes.NewBuffer(body))
@@ -24,9 +35,19 @@ func (c *Client) SetProgress(mangaID, chapter string) {
 	}
 	defer resp.Body.Close()
 
-	fmt.Println("Progress updated")
+	if resp.StatusCode >= 300 {
+		var e map[string]any
+		_ = json.NewDecoder(resp.Body).Decode(&e)
+		fmt.Println("Error:", e)
+		return
+	}
+
+	var out map[string]any
+	_ = json.NewDecoder(resp.Body).Decode(&out)
+	fmt.Println("Progress updated:", out)
 }
 
+// Deprecated (kept for compatibility with earlier experiments)
 func (c *Client) ListLibraryLegacy() {
 	req, _ := http.NewRequest("GET", c.BaseURL+"/users/library", nil)
 	req.Header.Set("Authorization", "Bearer "+c.Token)

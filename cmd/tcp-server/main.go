@@ -2,11 +2,12 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"mangahub/internal/config"
 	"mangahub/internal/db"
 	tcpsync "mangahub/internal/tcp"
-	"mangahub/internal/udp" // ⭐ THÊM
+	"mangahub/internal/udp"
 )
 
 func main() {
@@ -20,11 +21,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	
-	udpClient, err := udp.NewClient("127.0.0.1:7070")
+	// UDP notifications (default: 127.0.0.1:9092)
+	udpAddr := os.Getenv("MANGAHUB_UDP_ADDR")
+	if udpAddr == "" {
+		udpAddr = "127.0.0.1:9092"
+	}
+	udpClient, err := udp.NewClient(udpAddr)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer udpClient.Close()
 
 	addr := ":9090"
 	s := tcpsync.NewServer(
