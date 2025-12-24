@@ -40,6 +40,7 @@ grpcurl -plaintext \
   -d '{"manga_id":"one-piece","chapter":12}' \
   localhost:50051 mangahub.v1.MangaHubService/UpdateProgress
 ```
+<<<<<<< HEAD
 
 
 ## CLI usage (gRPC)
@@ -65,3 +66,5 @@ mangahub grpc progress one-piece 12
 ```
 
 Note: you still need to generate protobuf Go code once (see `proto/README.md` or `tools/gen-proto.sh`).
+=======
+>>>>>>> 9689ae421f821d44d0dd8cf230b14194f222ae38
